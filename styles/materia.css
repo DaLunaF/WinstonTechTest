@@ -1,0 +1,76 @@
+p.title
+{
+    margin: 5rem auto;
+    text-align: center;
+    font-size: 5rem;
+}
+
+div.container
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 90%;
+    margin: 3rem auto;
+}
+
+div.data-management
+{
+    width: 50%;
+}
+
+div.data-management form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+div.data-management form>*
+{
+    margin: 1rem auto;
+}
+
+div.data-management form input
+{
+    width: 25rem;
+    font-size: 2rem;
+}
+
+div.data-management form>span
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+div.data-management form button
+{
+    width: 10rem;
+    font-size: 1.5rem;
+}
+
+div.data-display
+{
+    width: 100%;
+    margin: auto;
+}
+
+thead.thead-dark
+{
+    font-size: 2rem;
+}
+
+tbody.materias-table-body
+{
+    font-size: 1.5rem;
+}
+
+td span
+{
+    margin: auto;
+    width: 100%;
+}

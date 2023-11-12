@@ -1,0 +1,50 @@
+p.title
+{
+    font-size: 5rem;
+    width: 100%;
+    text-align: center;
+    margin: 3rem auto;
+}
+
+div.container
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+div.data-management
+{
+    width: 50%;
+}
+
+div.data-management form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+div.data-management form>*
+{
+    margin-top: 1rem;
+}
+
+div.data-management form input, div.data-management form select 
+{
+    font-size: 1.5rem;
+    width: 25rem;
+}
+
+div.data-management form>button
+{
+    width: 20rem;
+    font-size: 1.5rem;
+}
+
+div.data-display
+{
+    width: 100%;
+}
