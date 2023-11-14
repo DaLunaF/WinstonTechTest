@@ -12,11 +12,12 @@ div.container
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    width: 90%;
 }
 
 div.data-management
 {
-    width: 50%;
+    width: 25%;
 }
 
 div.data-management form
@@ -47,4 +48,14 @@ div.data-management form>button
 div.data-display
 {
     width: 100%;
+}
+
+thead.thead-dark td, thead.thead-dark th
+{
+    font-size: 1.5rem;
+}
+
+tbody.docentes-table-body td, tbody.docentes-table-body th
+{
+    font-size: 1.3rem;
 }

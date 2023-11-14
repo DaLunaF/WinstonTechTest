@@ -29,7 +29,7 @@
         switch ($functionname) 
         {
             case 'InsertDocente':
-                $response["data"] = InsertDocente($primer_nombre, $segundo_nombre, $apellido_paterno, $apellido_materno, $clave, $contrato, $calle, $numero, $colonia, $f_telefono);
+                $response["data"] = InsertDocente($primer_nombre, $segundo_nombre, $apellido_paterno, $apellido_materno, $clave, $contrato, $calle, $numero, $colonia, $telefono);
                 $response["success"] = true;
                 break;
             case 'FetchDocentes':
@@ -37,7 +37,7 @@
                 $response["success"] = true;
             break;
             case 'DeleteDocente':
-                $response["data"] = DeleteMateria($clave);
+                $response["data"] = DeleteDocente($clave);
                 $response["success"] = true;
             break;
             default:

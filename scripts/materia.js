@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    fetchMaterias();
     formMateria = $("#create-materia-form");  
     rowContainerMaterias = $("#materias-table-body");
+    docentes = getDocentes();
 
     $(formMateria).validate({
         rules: {
@@ -49,6 +49,31 @@ $(document).ready(function(){
     });
 });
 
+function getDocentes()
+{
+    //OBTIENE DOCENTES
+    $.ajax({
+        url: "./controllers/DocenteController.php",
+        type: "POST",
+        data: {functionname: "FetchDocentes"},
+
+        success: function(msg, status, jqXHR)
+        {
+            const json = JSON.parse(msg);
+            if(json.success)
+            {
+                docentes = json.data;
+                fetchMaterias();
+            }
+        },
+        error: function(xhr, status, error)
+        {
+            var err = eval("(" + xhr.responseText + ")");
+            console.log(err);
+        }
+    });
+}
+
 function fetchMaterias()
 {
     //INSERTA MATERIA
@@ -64,7 +89,7 @@ function fetchMaterias()
             {
                 let i = 0
                 json.data.forEach(materia => {
-                    $(rowContainerMaterias).append(createRowMateria(i, materia));       
+                    $(rowContainerMaterias).append(createRowMateria(i, materia, docentes));       
                     i++;
                 });
             }
@@ -105,7 +130,7 @@ function insertMateria(f_form)
     }
 }
 
-function createRowMateria(f_index, f_materia)
+function createRowMateria(f_index, f_materia, f_docentes)
 {
     const row = document.createElement("tr");
 
@@ -125,6 +150,31 @@ function createRowMateria(f_index, f_materia)
     const creditosElement = document.createElement("td");
     $(creditosElement).html(f_materia.creditos);
     $(row).append(creditosElement);
+
+    const docenteElement = document.createElement("td");
+    const selectDocenteElement = document.createElement("select");
+    const nullOption = document.createElement("option");
+    $(nullOption).attr("value", null);
+    $(selectDocenteElement).append(nullOption);
+    f_docentes.forEach(docente => {
+        const optionDocenteElement = document.createElement("option");
+        $(optionDocenteElement).attr("value", docente.clave);
+        if(docente.segundo_nombre)
+        {
+            $(optionDocenteElement).html(`${docente.primer_nombre} ${docente.segundo_nombre} ${docente.apellido_paterno} ${docente.apellido_materno}`);
+            $(optionDocenteElement).attr("value", docente.clave);
+        }
+        else
+        {
+            $(optionDocenteElement).html(`${docente.primer_nombre} ${docente.apellido_paterno} ${docente.apellido_materno}`);
+            $(optionDocenteElement).attr("value", docente.clave);
+        }
+        $(selectDocenteElement).append(optionDocenteElement);
+    });
+    $(selectDocenteElement).val(f_materia.clave_docente);
+    $(selectDocenteElement).change({clave_materia: f_materia.clave}, ChangeDocente);
+    $(docenteElement).html(selectDocenteElement);
+    $(row).append(docenteElement);
 
     const optionsElement = document.createElement("td");
     const deleteBtn = document.createElement("span");
@@ -173,4 +223,32 @@ function DeleteMateria(event)
         });
     
     } 
+}
+
+function ChangeDocente(event)
+{
+    console.log(event.data.clave_materia);
+    console.log($(this).find(":selected").val());
+
+    //CAMBIA LA MATERIA DE PROFESOR
+    $.ajax({
+        url: "./controllers/MateriaController.php",
+        type: "POST",
+        data: {functionname: "AsignarDocenteMateria", clave: event.data.clave_materia, clave_docente: $(this).find(":selected").val()},
+
+        success: function(msg, status, jqXHR)
+        {
+            const json = JSON.parse(msg);
+            if(json.success)
+            {
+                console.log(json);
+                location.reload();
+            }
+        },
+        error: function(xhr, status, error)
+        {
+            var err = eval("(" + xhr.responseText + ")");
+            console.log(err);
+        }
+    });
 }

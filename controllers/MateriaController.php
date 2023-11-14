@@ -11,6 +11,8 @@
             $nombre = $_POST["nombre"];
         if(isset($_POST["creditos"]))
             $creditos = $_POST["creditos"];
+        if(isset($_POST["clave_docente"]))
+            $clave_docente = $_POST["clave_docente"];
         
         switch ($functionname) 
         {
@@ -24,6 +26,10 @@
             break;
             case 'DeleteMateria':
                 $response["data"] = DeleteMateria($clave);
+                $response["success"] = true;
+            break;
+            case 'AsignarDocenteMateria':
+                $response["data"] = AsignarDocenteMateria($clave, $clave_docente);
                 $response["success"] = true;
             break;
             default:
@@ -60,4 +66,10 @@
         $query = "CALL SP_DELETE_MATERIA('$f_clave');";
         $response = update($query);
         return $response;
+    }
+
+    function AsignarDocenteMateria($f_clave, $f_clave_docente)
+    {
+        $query = "CALL SP_ASIGNAR_DOCENTE_MATERIA('$f_clave', '$f_clave_docente');";
+        return insert($query);
     }

@@ -98,7 +98,7 @@ $(document).ready(function()
 
 function fetchDocentes()
 {
-    //INSERTA MATERIA
+    //OBTIENE DOCENTES
     $.ajax({
         url: "./controllers/DocenteController.php",
         type: "POST",
@@ -109,7 +109,6 @@ function fetchDocentes()
             const json = JSON.parse(msg);
             if(json.success)
             {
-                console.log(json);
                 let i = 0
                 json.data.forEach(docente => {
                     $(rowContainerDocentes).append(createRowDocente(i, docente));       
@@ -129,7 +128,7 @@ function insertDocente(f_form)
 {
     if(docenteForm.valid())
     {
-        //INSERTA MATERIA
+        //INSERTA DOCENTE
         $.ajax({
             url: "./controllers/DocenteController.php",
             type: "POST",
@@ -200,9 +199,9 @@ function DeleteDocente(event)
 {
     if (confirm(`Seguro que desea borrar al docente con clave: ${event.data.claveDocente}?`)) 
     {
-        // //INSERTA MATERIA
+        // BORRA DOCENTE
         $.ajax({
-            url: "./controllers/MateriaController.php",
+            url: "./controllers/DocenteController.php",
             type: "POST",
             data: {functionname: "DeleteDocente", clave: event.data.claveDocente},
     
